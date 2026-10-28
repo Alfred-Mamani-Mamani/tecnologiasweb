@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.R.V.E. Tarapacá | Inicio</title>
+    <title>S.I.R.V.E. Tarapacá | Diario Regional & Alertas en Vivo</title>
+    
     <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <style>
         :root {
             --sirve-green-dark: #1b3832;
@@ -22,87 +24,86 @@
             color: #2d3748; 
         }
 
-        /* Hero Section */
-        .hero-section { 
-            background: linear-gradient(135deg, #e4ede7 0%, #f4f8f5 100%); 
-            min-height: 85vh; 
-            padding: 5rem 1.5rem; 
-        }
-        
-        .hero-title { 
-            font-size: 3.5rem; 
-            font-weight: 800; 
-            color: var(--sirve-green-dark); 
-            line-height: 1.15; 
-        }
-        
-        .hero-title span { 
-            color: var(--sirve-accent); 
-            font-style: italic; 
-        }
-
-        /* Botones personalizados */
-        .btn-sirve-primary { 
-            background-color: var(--sirve-green-dark); 
-            color: white; 
-            font-weight: 600; 
-            padding: 0.85rem 1.8rem; 
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(27, 56, 50, 0.15);
-        }
-        .btn-sirve-primary:hover { 
-            background-color: #122622; 
-            color: white; 
-            transform: translateY(-2px);
+        .navbar-sirve {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .btn-sirve-accent { 
             background-color: var(--sirve-accent); 
             color: white; 
             font-weight: 600; 
-            padding: 0.6rem 1.4rem;
             border-radius: 8px;
+            padding: 0.5rem 1.2rem;
             transition: all 0.3s ease;
         }
-        .btn-sirve-accent:hover { 
-            background-color: var(--sirve-accent-hover); 
-            color: white; 
+        .btn-sirve-accent:hover { background-color: var(--sirve-accent-hover); color: white; }
+
+        /* Banner Principal Noticias al Momento */
+        .hero-diario {
+            background: linear-gradient(135deg, #1b3832 0%, #0d1f1c 100%);
+            color: white;
+            padding: 3rem 0;
+            border-bottom: 4px solid var(--sirve-accent);
         }
 
-        /* Tarjeta Dashboard Preview */
-        .card-preview { 
-            background: linear-gradient(145deg, #1b3832 0%, #0f2420 100%); 
-            color: white; 
-            border-radius: 20px; 
-            padding: 3rem 2.5rem; 
-            box-shadow: 0 15px 35px rgba(27, 56, 50, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Tarjetas de características */
-        .feature-card {
+        .card-noticia {
             background: white;
-            border-radius: 12px;
-            padding: 2rem;
             border: none;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
         }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+        .card-noticia:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        .feature-icon {
-            font-size: 2.2rem;
-            color: var(--sirve-accent);
+
+        .badge-fuente {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 20px;
+        }
+
+        .badge-senapred { background-color: #dc3545; color: white; }
+        .badge-mop { background-color: #0d6efd; color: white; }
+        .badge-muni { background-color: #198754; color: white; }
+        .badge-alerta { background-color: #fd7e14; color: white; }
+
+        .ticker-bar {
+            background-color: #0f2420;
+            color: #f8f9fa;
+            font-size: 0.9rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .legal-banner {
+            background-color: #e2ede3;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 5px solid var(--sirve-green-dark);
         }
     </style>
 </head>
 <body>
 
-    <!-- Header / Navbar Principal -->
-    <nav class="navbar navbar-expand-lg py-3 bg-white shadow-sm sticky-top">
+    <!-- Barrita Ticker Última Hora -->
+    <div class="ticker-bar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <div>
+                <span class="badge bg-danger text-uppercase me-2"><i class="bi bi-broadcast"></i> Última Hora</span>
+                <span class="small">Monitoreo continuo de emergencias e incidentes viales en la Región de Tarapacá.</span>
+            </div>
+            <div class="d-none d-md-block text-white-50 small">
+                <i class="bi bi-clock me-1"></i> Actualizado en vivo
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar Global -->
+    <nav class="navbar navbar-expand-lg navbar-sirve py-3 sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <div class="bg-dark text-white fw-bold rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm" style="width:40px; height:40px;">S</div>
@@ -111,106 +112,179 @@
                     <small class="text-muted fs-7">Tarapacá</small>
                 </div>
             </a>
-            <div class="ms-auto d-flex align-items-center gap-3">
-                <a href="index.html" class="nav-link text-dark fw-bold active">Inicio</a>
-                <a href="#plataforma" class="nav-link text-muted">Plataforma</a>
-                <a href="login.html" class="nav-link text-dark fw-bold">Iniciar sesión</a>
-                <a href="registro.html" class="btn btn-sirve-accent text-decoration-none"><i class="bi bi-person-plus-fill me-1"></i> Crear cuenta</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMenu">
+                <div class="navbar-nav ms-auto align-items-lg-center gap-2 mt-3 mt-lg-0">
+                    <a href="index.html" class="nav-link text-dark fw-bold active"><i class="bi bi-newspaper me-1"></i> Diario Regional</a>
+                    <a href="#plataforma" class="nav-link text-muted"><i class="bi bi-info-circle me-1"></i> La Plataforma</a>
+                    <a href="reportes.html" class="nav-link text-dark fw-bold"><i class="bi bi-map-fill text-danger me-1"></i> Mapa de Reportes</a>
+                    <a href="login.html" class="nav-link text-dark fw-bold border-start ps-lg-3">Iniciar sesión</a>
+                    <a href="registro.html" class="btn btn-sirve-accent text-decoration-none"><i class="bi bi-person-plus-fill me-1"></i> Crear cuenta</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section Principal -->
-    <section class="hero-section d-flex align-items-center">
+    <!-- Header Principal: Diario Oficial Regional -->
+    <div class="hero-diario">
         <div class="container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-6">
-                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold mb-3 border">
-                        <i class="bi bi-geo-alt-fill text-danger me-1"></i> REGIÓN DE TARAPACÁ
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <span class="badge bg-white bg-opacity-10 text-white border border-light border-opacity-25 px-3 py-1 mb-2 small">
+                        <i class="bi bi-rss-fill text-warning me-1"></i> BOLETÍN OFICIAL Y PRENSA REGIONAL
                     </span>
-                    <h1 class="hero-title mb-4">Prepararnos en comunidad <span>nos protege.</span></h1>
-                    <p class="text-muted fs-5 mb-4">S.I.R.V.E. conecta a los vecinos con la municipalidad y organismos locales para responder en tiempo real ante emergencias, precipitación e incidentes comunitarios.</p>
-                    <div class="d-flex gap-3 align-items-center flex-wrap">
-                        <a href="registro.html" class="btn btn-sirve-primary text-decoration-none">Crear una cuenta <i class="bi bi-arrow-right ms-2"></i></a>
-                        <a href="login.html" class="btn btn-outline-dark rounded px-4 py-3 fw-bold"><i class="bi bi-box-arrow-in-right me-1"></i> Ya tengo cuenta</a>
-                    </div>
+                    <h1 class="fw-bold fs-1 m-0">Diario Oficial de Emergencias e Incidentes</h1>
+                    <p class="text-white-50 mt-2 fs-5 m-0">Consolidado de noticias del momento extraídas de SENAPRED, MOP, Delegación Presidencial y la Red Ciudadana.</p>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card-preview text-center">
-                        <div class="d-flex justify-content-between text-white-50 small mb-4">
-                            <span><i class="bi bi-shield-check text-warning me-1"></i> Red Regional S.I.R.V.E.</span>
-                            <span>Tarapacá, Chile</span>
-                        </div>
-                        <div class="py-4">
-                            <div class="bg-white bg-opacity-10 rounded-circle d-inline-flex p-4 mb-3 border border-light border-opacity-25">
-                                <i class="bi bi-broadcast fs-1 text-warning"></i>
-                            </div>
-                            <h3 class="fw-bold mt-2">Información local.<br><span class="text-warning">Acción coordinada.</span></h3>
-                        </div>
-                        <div class="d-flex justify-content-between border-top border-light border-opacity-25 pt-3 mt-4 small text-white-50">
-                            <span><i class="bi bi-people-fill me-1"></i> COMUNIDAD ACTIVA</span>
-                            <span><i class="bi bi-geo-fill me-1"></i> GEOLOCALIZACIÓN</span>
-                        </div>
+                <div class="col-lg-4 text-lg-end">
+                    <div class="bg-white bg-opacity-10 p-3 rounded-3 border border-light border-opacity-25 text-start">
+                        <small class="text-white-50 d-block"><i class="bi bi-geo-alt-fill text-danger me-1"></i> ESTADO REGIONAL</small>
+                        <strong class="fs-5 text-warning">Alerta Temprana Preventiva</strong>
+                        <small class="d-block text-white-50 fs-7 mt-1">Lluvias estivales en precordillera / Marejadas en zona costera</small>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Sección de Funcionalidades -->
-    <section id="plataforma" class="py-5 bg-light">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <span class="text-uppercase fw-bold text-muted tracking-wider">UN PUNTO DE ENCUENTRO CIUDADANO</span>
-                <h2 class="fw-bold fs-1 mt-2">Una plataforma interactiva para estar conectados</h2>
+    <!-- Contenido del Diario de Noticias en Vivo -->
+    <main class="container my-5">
+        
+        <!-- Filtro del Diario por Comunas -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3 bg-white p-3 rounded-3 shadow-sm border">
+            <div>
+                <h5 class="fw-bold m-0"><i class="bi bi-funnel-fill text-primary me-1"></i> Noticias y Alertas por Comuna</h5>
+                <small class="text-muted">Filtre las publicaciones oficiales para conocer la situación de su sector</small>
             </div>
+            <div class="d-flex gap-2">
+                <select id="filtroDiarioComuna" class="form-select bg-light fw-bold" style="min-width: 220px;">
+                    <option value="Todas">Toda la Región de Tarapacá</option>
+                    <option value="Iquique">Iquique</option>
+                    <option value="Alto Hospicio">Alto Hospicio</option>
+                    <option value="Pozo Almonte">Pozo Almonte / La Tirana</option>
+                    <option value="Pica">Pica / Matilla</option>
+                    <option value="Huara">Huara / Pisagua</option>
+                    <option value="Colchane">Colchane</option>
+                    <option value="Camiña">Camiña</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Secciones de Noticias en Vivo -->
+        <div class="row g-4" id="contenedorNoticias">
             
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card h-100">
-                        <i class="bi bi-megaphone-fill feature-icon mb-3"></i>
-                        <h4 class="fw-bold">Reportes Vecinales</h4>
-                        <p class="text-muted">Notifica de manera inmediata anegamientos, fugas de agua, fallas de alumbrado o incidentes en tu zona.</p>
+            <!-- Noticia Destacada 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-noticia p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge badge-fuente badge-senapred"><i class="bi bi-broadcast me-1"></i> SENAPRED Tarapacá</span>
+                        <small class="text-muted fs-7">Hace 20 min</small>
+                    </div>
+                    <h5 class="fw-bold text-dark">Alerta por precipitaciones estivales en precordillera</h5>
+                    <p class="text-muted small">Se prevén chubascos y tormentas eléctricas en Pozo Almonte, Pica y Camiña. Cuadrillas de emergencia monitorean el caudal de quebradas.</p>
+                    <div class="border-top pt-2 mt-auto d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">El Tamarugal</span>
+                        <a href="https://senapred.cl" target="_blank" class="small fw-bold text-decoration-none">Leer en fuente ↗</a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="feature-card h-100">
-                        <i class="bi bi-map-fill feature-icon mb-3"></i>
-                        <h4 class="fw-bold">Georreferenciación</h4>
-                        <p class="text-muted">Visualiza las zonas afectadas mediante ubicación geográfica precisa para una atención oportuna.</p>
+            </div>
+
+            <!-- Noticia Destacada 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-noticia p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge badge-fuente badge-mop"><i class="bi bi-truck me-1"></i> MOP / Vialidad</span>
+                        <small class="text-muted fs-7">Hace 1 hora</small>
+                    </div>
+                    <h5 class="fw-bold text-dark">Trabajos de bacheo y reparación en Ruta A-16</h5>
+                    <p class="text-muted small">Mantenimiento de calzada en la bajada de Alto Hospicio a Iquique. Se insta a los conductores a mantener la distancia de seguridad.</p>
+                    <div class="border-top pt-2 mt-auto d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">Alto Hospicio / Iquique</span>
+                        <a href="https://mop.cl" target="_blank" class="small fw-bold text-decoration-none">Leer en fuente ↗</a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="feature-card h-100">
-                        <i class="bi bi-clock-history feature-icon mb-3"></i>
-                        <h4 class="fw-bold">Seguimiento en Vivo</h4>
-                        <p class="text-muted">Revisa el estado de actualización (Pendiente, En Proceso, Resuelto) de cada alerta ingresada.</p>
+            </div>
+
+            <!-- Noticia Destacada 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-noticia p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge badge-fuente badge-muni"><i class="bi bi-building me-1"></i> Muni Iquique</span>
+                        <small class="text-muted fs-7">Hace 3 horas</small>
                     </div>
+                    <h5 class="fw-bold text-dark">Aviso de Marejadas en el litoral costero</h5>
+                    <p class="text-muted small">Autoridad Marítima de Iquique llama a la precaución por marejadas anómalas en el roquerío costero y caletas del sur hasta el fin de semana.</p>
+                    <div class="border-top pt-2 mt-auto d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">Iquique</span>
+                        <a href="https://iquique.cl" target="_blank" class="small fw-bold text-decoration-none">Leer en fuente ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Noticia Comunitario (Basada en la Red SIRVE) -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-noticia p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge badge-fuente badge-alerta"><i class="bi bi-people-fill me-1"></i> Alerta Vecinal S.I.R.V.E.</span>
+                        <small class="text-muted fs-7">En vivo</small>
+                    </div>
+                    <h5 class="fw-bold text-dark">Reporte de bache peligroso en la bajada de Hospicio</h5>
+                    <p class="text-muted small">Vecinos reportan evento de consideración en el carril derecho. La alerta ya fue georreferenciada y notificada a los equipos en terreno.</p>
+                    <div class="border-top pt-2 mt-auto d-flex justify-content-between align-items-center">
+                        <span class="badge bg-light text-dark border">Comunidad Activa</span>
+                        <a href="reportes.html" class="small fw-bold text-danger text-decoration-none">Ver en Mapa →</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Banner Call to Action para ir a Reportes -->
+        <div class="bg-dark text-white p-4 p-md-5 rounded-3 mt-5 shadow text-center position-relative overflow-hidden">
+            <h2 class="fw-bold fs-2">¿Presencias una emergencia o daño en la vía?</h2>
+            <p class="text-white-50 fs-5 mb-4" style="max-width: 700px; margin: 0 auto;">
+                Sube tu reporte georreferenciado al mapa regional. Tus imágenes contarán con anonimización automática de patentes y rostros según la Ley N° 21.718.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="reportes.html" class="btn btn-sirve-accent btn-lg text-decoration-none"><i class="bi bi-geo-alt-fill me-1"></i> Ir al Mapa de Reportes</a>
+                <a href="registro.html" class="btn btn-outline-light btn-lg"><i class="bi bi-person-plus-fill me-1"></i> Registrarme como Vecino</a>
+            </div>
+        </div>
+
+        <!-- Banner Ley de Protección de Datos Personales -->
+        <div class="legal-banner mt-5 shadow-sm">
+            <div class="row align-items-center">
+                <div class="col-md-1 text-center d-none d-md-block">
+                    <i class="bi bi-shield-lock-fill text-success fs-1"></i>
+                </div>
+                <div class="col-md-11">
+                    <h5 class="fw-bold text-dark mb-1">Protección de Datos Personales (Ley N° 19.628 y Reforma Ley N° 21.718)</h5>
+                    <p class="text-muted small m-0">
+                        S.I.R.V.E. Tarapacá opera bajo estrictos protocolos de confidencialidad. Las fotografías publicadas por la comunidad son procesadas con <strong>difuminado automático de privacidad</strong> (caras y patentes) para asegurar el cumplimiento legal en el espacio público.
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
+
+    </main>
 
     <!-- Footer -->
-    <footer class="border-top py-4 bg-white">
-        <div class="container d-flex justify-content-between align-items-center small text-muted">
-            <span><strong>S.I.R.V.E.</strong> Tarapacá</span>
-            <span>Proyecto de Tecnología Web • Entrega Integrada</span>
+    <footer class="border-top py-4 bg-white text-center small text-muted">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <span><strong>S.I.R.V.E.</strong> Tarapacá • Diario de Noticias & Alertas</span>
+            <span>Región de Tarapacá, Chile</span>
             <span>© 2026</span>
         </div>
     </footer>
 
-    <!-- Scripts de Supabase -->
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
-    <script>
-        window.addEventListener("DOMContentLoaded", async () => {
-            const { data: { session } } = await db.auth.getSession();
-            if (session) {
-                // Si la sesión está activa, redirige directo a reportes
-                window.location.href = "reportes.html";
-            }
-        });
-    </script>
 </body>
 </html>
