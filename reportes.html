@@ -3,123 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.R.V.E. | Reporte Ciudadano de Zonas Afectadas</title>
+    <title>S.I.R.V.E. Tarapacá | Panel de Reportes</title>
     <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
+        :root {
+            --sirve-green-dark: #1b3832;
+            --sirve-green-light: #e8f0ec;
+            --sirve-accent: #d95d39;
+            --sirve-accent-hover: #b84726;
+        }
+
         body { 
-            background-color: #f4f6f8; 
-            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background-color: #f7f9f8; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            color: #2d3748; 
         }
 
-        .header-banner { 
-            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); 
-            color: white; 
-            padding: 30px 0; 
-            text-align: center; 
-            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.2);
+        /* Navbar estilo S.I.R.V.E. */
+        .navbar-sirve {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .card-custom {
+        /* Banner de cabecera */
+        .dashboard-header {
+            background: linear-gradient(135deg, #1b3832 0%, #0d1f1c 100%);
+            color: white;
+            padding: 2.5rem 0;
+            border-bottom: 3px solid var(--sirve-accent);
+        }
+
+        /* Tarjetas estilizadas */
+        .card-sirve {
+            background: #ffffff;
             border: none;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             overflow: hidden;
         }
 
-        .card-header-blue { 
-            background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%); 
-            color: white; 
-            font-weight: 700; 
-            padding: 1rem 1.5rem;
-            font-size: 1.1rem;
+        .card-header-sirve {
+            background-color: var(--sirve-green-dark);
+            color: white;
+            font-weight: 700;
+            padding: 1rem 1.25rem;
+            border: none;
         }
 
-        .report-item {
-            transition: background-color 0.2s ease;
-            border-left: 4px solid #0d6efd;
+        /* Botón primario verde S.I.R.V.E. */
+        .btn-sirve-primary {
+            background-color: var(--sirve-green-dark);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.2s ease;
         }
-        .report-item:hover {
-            background-color: #f8f9fa;
+        .btn-sirve-primary:hover {
+            background-color: #122622;
+            color: white;
         }
 
-        .badge-pendiente { background-color: #ffc107; color: #000; }
-        .badge-proceso { background-color: #0d6efd; color: #fff; }
-        .badge-resuelto { background-color: #198754; color: #fff; }
+        /* Elementos de la lista */
+        .report-card {
+            border-left: 4px solid var(--sirve-accent);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .report-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+        }
+
+        /* Badges de estado */
+        .badge-pendiente { background-color: #f59e0b; color: #ffffff; }
+        .badge-proceso { background-color: #2563eb; color: #ffffff; }
+        .badge-resuelto { background-color: #10b981; color: #ffffff; }
     </style>
 </head>
 <body>
 
-    <!-- Banner Header Superior -->
-    <div class="header-banner">
+    <!-- Header Navbar sintonizado con el resto del sitio -->
+    <nav class="navbar navbar-expand-lg navbar-sirve py-3 sticky-top">
         <div class="container">
-            <h2 class="fw-bold m-0"><i class="bi bi-geo-alt-fill me-2"></i>Reporte Ciudadano de Zonas Afectadas</h2>
-            <p class="m-0 mt-1 opacity-75">Plataforma web de georreferenciación por precipitaciones y emergencias</p>
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <div class="bg-dark text-white fw-bold rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm" style="width:40px; height:40px;">S</div>
+                <div>
+                    <strong class="d-block text-dark leading-none fs-5">S.I.R.V.E.</strong>
+                    <small class="text-muted fs-7">Tarapacá</small>
+                </div>
+            </a>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <span id="userBadge" class="badge bg-light text-dark border px-3 py-2 fw-semibold">
+                    <i class="bi bi-person-fill text-muted me-1"></i> Comprobando sesión...
+                </span>
+                <button id="btnLogout" class="btn btn-outline-danger btn-sm rounded-2 px-3 fw-bold">
+                    <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner del Dashboard -->
+    <div class="dashboard-header mb-4">
+        <div class="container">
+            <span class="badge bg-white bg-opacity-10 text-white border border-light border-opacity-25 px-3 py-1 mb-2 small">
+                <i class="bi bi-shield-check text-warning me-1"></i> GESTIÓN TERRITORIAL EN VIVO
+            </span>
+            <h2 class="fw-bold m-0 fs-1">Reporte Ciudadano de Zonas Afectadas</h2>
+            <p class="text-white-50 m-0 mt-1 fs-5">Plataforma comunal para georreferenciación de emergencias e incidentes</p>
         </div>
     </div>
 
-    <div class="container my-4" style="max-width: 900px;">
-        <!-- Control de Sesión -->
-        <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded-3 shadow-sm border">
-            <div class="d-flex align-items-center">
-                <i class="bi bi-person-circle fs-4 text-primary me-2"></i>
-                <span id="userBadge" class="fw-semibold text-dark">Comprobando sesión...</span>
-            </div>
-            <button id="btnLogout" class="btn btn-outline-danger btn-sm rounded-pill px-3"><i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión</button>
-        </div>
-
-        <!-- Formulario de Registro (SIRVE-3) -->
-        <div class="card card-custom mb-5">
-            <div class="card-header card-header-blue">
-                <i class="bi bi-plus-circle-fill me-2"></i> Registrar Zona Afectada por Precipitaciones (SIRVE-3)
+    <div class="container my-4" style="max-width: 920px;">
+        
+        <!-- Formulario de Registro SIRVE-3 -->
+        <div class="card card-sirve mb-5">
+            <div class="card-header card-header-sirve d-flex align-items-center justify-content-between">
+                <span><i class="bi bi-plus-circle-fill text-warning me-2"></i> Registrar Zona Afectada (SIRVE-3)</span>
+                <small class="fw-normal opacity-75">Región de Tarapacá</small>
             </div>
             <div class="card-body p-4">
                 <form id="formZonaAfectada">
                     <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="bi bi-geo-alt text-danger me-1"></i> Sector / Dirección para Iquique:</label>
-                        <input type="text" id="sectorInput" class="form-control form-control-lg fs-6 bg-light" required placeholder="Ej: Av. Arturo Prat con Baquedano">
+                        <label class="form-label fw-bold text-muted small"><i class="bi bi-geo-alt-fill text-danger me-1"></i> SECTOR / DIRECCIÓN EXACTA:</label>
+                        <input type="text" id="sectorInput" class="form-control form-control-lg fs-6 bg-light" required placeholder="Ej: Av. Arturo Prat con Baquedano, Iquique">
                     </div>
                     
                     <div class="mb-3">
-                        <label class="form-label fw-bold"><i class="bi bi-exclamation-triangle text-warning me-1"></i> Tipo de Incidente / Afectación:</label>
+                        <label class="form-label fw-bold text-muted small"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> TIPO DE INCIDENTE / AFECTACIÓN:</label>
                         <select id="tipoInput" class="form-select form-select-lg fs-6 bg-light" required>
                             <option value="Acumulación de Agua">Acumulación de Agua / Anegamiento</option>
-                            <option value="Escombros / Basura">Acumulación de Escombros / Basura</option>
-                            <option value="Falla Alumbrado">Falla de Alumbrado Público</option>
-                            <option value="Daño Vía">Daño en Pavimento / Vía Pública</option>
+                            <option value="Escombros / Basura">Acumulación de Escombros / Microbasural</option>
+                            <option value="Falla Alumbrado">Falla en Alumbrado Público</option>
+                            <option value="Daño Vía">Daño en Pavimento / Evento en Vía</option>
                         </select>
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label fw-bold"><i class="bi bi-card-text text-primary me-1"></i> Descripción detallada del daño:</label>
-                        <textarea id="descInput" class="form-control bg-light" rows="3" required placeholder="Describa la acumulación de agua o daños materiales..."></textarea>
+                        <label class="form-label fw-bold text-muted small"><i class="bi bi-card-text me-1"></i> DESCRIPCIÓN DETALLADA DEL DAÑO:</label>
+                        <textarea id="descInput" class="form-control bg-light" rows="3" required placeholder="Describa la acumulación de agua, peligro o daños materiales materiales observados..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-lg w-100 fw-bold shadow-sm"><i class="bi bi-send-fill me-2"></i> Enviar Reporte Georreferenciado</button>
+                    <button type="submit" class="btn btn-sirve-primary w-100 shadow-sm py-3 fs-6">
+                        <i class="bi bi-send-fill me-2"></i> Enviar Reporte Georreferenciado
+                    </button>
                 </form>
             </div>
         </div>
 
         <!-- Historial Comunal de Zonas Reportadas -->
-        <div class="card card-custom">
-            <div class="card-header bg-dark text-white fw-bold p-3 fs-5">
-                <i class="bi bi-list-stars me-2 text-warning"></i> Zonas Reportadas por la Comunidad
+        <div class="card card-sirve mb-5">
+            <div class="card-header bg-dark text-white fw-bold p-3 fs-5 d-flex align-items-center justify-content-between">
+                <span><i class="bi bi-list-task me-2 text-warning"></i> Zonas Reportadas por la Comunidad</span>
+                <button id="btnRecargar" class="btn btn-outline-light btn-sm"><i class="bi bi-arrow-clockwise"></i> Actualizar</button>
             </div>
-            <div class="card-body p-0">
-                <div id="listaReportes" class="list-group list-group-flush">
-                    <div class="p-4 text-center text-muted">
-                        <div class="spinner-border text-primary me-2" role="status"></div>
-                        Cargando reportes comunitarios desde Supabase...
+            <div class="card-body p-3 bg-light">
+                <div id="listaReportes" class="d-flex flex-column gap-3">
+                    <div class="p-4 text-center text-muted bg-white rounded-3 shadow-sm">
+                        <div class="spinner-border text-success me-2" role="status"></div>
+                        Cargando información comunal desde Supabase...
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="text-center py-4 text-muted border-top mt-5 fs-7 bg-white">
-        © 2026 Municipalidad de Iquique - Gestión de Emergencias | S.I.R.V.E. Tarapacá
+    <!-- Footer armónico -->
+    <footer class="border-top py-4 bg-white text-center small text-muted">
+        <div class="container">
+            © 2026 Municipalidad de Iquique • Gestión de Emergencias | <strong>S.I.R.V.E. Tarapacá</strong>
+        </div>
     </footer>
 
     <!-- Scripts de Supabase -->
@@ -128,7 +185,7 @@
     <script>
         let usuarioActual = null;
 
-        // Comprobar sesión al entrar
+        // Comprobar sesión al cargar la página
         window.addEventListener("DOMContentLoaded", async () => {
             const { data: { session } } = await db.auth.getSession();
             if (!session) {
@@ -136,15 +193,18 @@
                 return;
             }
             usuarioActual = session.user;
-            document.getElementById("userBadge").textContent = `Sesión activa: ${usuarioActual.email}`;
+            document.getElementById("userBadge").innerHTML = `<i class="bi bi-person-circle text-success me-1"></i> ${usuarioActual.email}`;
             cargarReportes();
         });
 
-        // Cerrar Sesión
+        // Evento de cierre de sesión
         document.getElementById("btnLogout").addEventListener("click", async () => {
             await db.auth.signOut();
             window.location.href = "login.html";
         });
+
+        // Botón recargar manual
+        document.getElementById("btnRecargar").addEventListener("click", cargarReportes);
 
         // Insertar reporte en Supabase
         document.getElementById("formZonaAfectada").addEventListener("submit", async (e) => {
@@ -164,26 +224,26 @@
             ]);
 
             if (error) {
-                alert("Error al guardar: " + error.message);
+                alert("Error al enviar el reporte: " + error.message);
             } else {
-                alert("Reporte georreferenciado registrado con éxito.");
+                alert("¡Reporte comunitario ingresado correctamente!");
                 document.getElementById("formZonaAfectada").reset();
                 cargarReportes();
             }
         });
 
-        // Obtener datos dinámicos desde Supabase
+        // Consultar datos desde Supabase
         async function cargarReportes() {
             const lista = document.getElementById("listaReportes");
             const { data, error } = await db.from("accidentes").select("*").order("created_at", { ascending: false });
 
             if (error || !data) {
-                lista.innerHTML = `<div class="p-4 text-danger text-center"><i class="bi bi-exclamation-octagon me-1"></i> Error al cargar datos desde la base de datos.</div>`;
+                lista.innerHTML = `<div class="p-4 text-danger text-center bg-white rounded-3 shadow-sm"><i class="bi bi-exclamation-triangle me-1"></i> Error al conectar con la base de datos.</div>`;
                 return;
             }
 
             if (data.length === 0) {
-                lista.innerHTML = `<div class="p-4 text-muted text-center"><i class="bi bi-info-circle me-1"></i> No hay zonas reportadas registradas aún.</div>`;
+                lista.innerHTML = `<div class="p-4 text-muted text-center bg-white rounded-3 shadow-sm"><i class="bi bi-info-circle me-1"></i> No se han registrado incidentes todavía.</div>`;
                 return;
             }
 
@@ -194,13 +254,20 @@
                 if(item.estado === "Resuelto") badgeStyle = "badge-resuelto";
 
                 lista.innerHTML += `
-                    <div class="list-group-item p-3 report-item">
+                    <div class="card card-sirve p-3 report-card">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h6 class="fw-bold mb-0 text-primary fs-5"><i class="bi bi-geo-alt-fill text-danger me-1"></i> ${item.ubicacion}</h6>
+                            <span class="fw-bold text-dark fs-5">
+                                <i class="bi bi-geo-alt-fill text-danger me-1"></i> ${item.ubicacion}
+                            </span>
                             <span class="badge ${badgeStyle} px-3 py-2 rounded-pill">${item.estado || 'Pendiente'}</span>
                         </div>
-                        <p class="mb-1 text-dark fs-6"><strong>${item.tipo}:</strong> ${item.descripcion}</p>
-                        <small class="text-muted"><i class="bi bi-calendar-event me-1"></i> Fecha: ${new Date(item.created_at).toLocaleDateString()}</small>
+                        <p class="mb-2 text-secondary">
+                            <strong class="text-dark">${item.tipo}:</strong> ${item.descripcion}
+                        </p>
+                        <div class="small text-muted d-flex align-items-center gap-3">
+                            <span><i class="bi bi-calendar3 me-1"></i> ${new Date(item.created_at).toLocaleDateString()}</span>
+                            <span><i class="bi bi-clock me-1"></i> ${new Date(item.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        </div>
                     </div>
                 `;
             });
