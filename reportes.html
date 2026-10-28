@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.R.V.E. Tarapacá | Panel de Reportes</title>
-    <!-- Bootstrap 5 CSS CDN -->
+    <title>S.I.R.V.E. Tarapacá | Panel de Reportes Territorial</title>
+    
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CDN -->
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Leaflet MAP CSS (Mapa Interactivo Gratuito) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <style>
         :root {
             --sirve-green-dark: #1b3832;
@@ -22,13 +26,11 @@
             color: #2d3748; 
         }
 
-        /* Navbar estilo S.I.R.V.E. */
         .navbar-sirve {
             background-color: #ffffff;
             border-bottom: 1px solid #e2e8f0;
         }
 
-        /* Banner de cabecera */
         .dashboard-header {
             background: linear-gradient(135deg, #1b3832 0%, #0d1f1c 100%);
             color: white;
@@ -36,7 +38,6 @@
             border-bottom: 3px solid var(--sirve-accent);
         }
 
-        /* Tarjetas estilizadas */
         .card-sirve {
             background: #ffffff;
             border: none;
@@ -53,7 +54,6 @@
             border: none;
         }
 
-        /* Botón primario verde S.I.R.V.E. */
         .btn-sirve-primary {
             background-color: var(--sirve-green-dark);
             color: white;
@@ -68,9 +68,15 @@
             color: white;
         }
 
-        /* Elementos de la lista */
+        #mapaSeleccion {
+            height: 280px;
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+
         .report-card {
-            border-left: 4px solid var(--sirve-accent);
+            border-left: 5px solid var(--sirve-accent);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .report-card:hover {
@@ -78,7 +84,12 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.06);
         }
 
-        /* Badges de estado */
+        .img-evidencia {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
         .badge-pendiente { background-color: #f59e0b; color: #ffffff; }
         .badge-proceso { background-color: #2563eb; color: #ffffff; }
         .badge-resuelto { background-color: #10b981; color: #ffffff; }
@@ -86,7 +97,7 @@
 </head>
 <body>
 
-    <!-- Header Navbar sintonizado con el resto del sitio -->
+    <!-- Header Navbar -->
     <nav class="navbar navbar-expand-lg navbar-sirve py-3 sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
@@ -97,8 +108,9 @@
                 </div>
             </a>
             <div class="ms-auto d-flex align-items-center gap-3">
+                <!-- Privacidad de Usuario: Se muestra el Nombre de Usuario -->
                 <span id="userBadge" class="badge bg-light text-dark border px-3 py-2 fw-semibold">
-                    <i class="bi bi-person-fill text-muted me-1"></i> Comprobando sesión...
+                    <i class="bi bi-person-fill text-muted me-1"></i> Vecino Activo
                 </span>
                 <button id="btnLogout" class="btn btn-outline-danger btn-sm rounded-2 px-3 fw-bold">
                     <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
@@ -111,81 +123,112 @@
     <div class="dashboard-header mb-4">
         <div class="container">
             <span class="badge bg-white bg-opacity-10 text-white border border-light border-opacity-25 px-3 py-1 mb-2 small">
-                <i class="bi bi-shield-check text-warning me-1"></i> GESTIÓN TERRITORIAL EN VIVO
+                <i class="bi bi-shield-check text-warning me-1"></i> GEORREFERENCIACIÓN Y EMERGENCIAS
             </span>
             <h2 class="fw-bold m-0 fs-1">Reporte Ciudadano de Zonas Afectadas</h2>
-            <p class="text-white-50 m-0 mt-1 fs-5">Plataforma comunal para georreferenciación de emergencias e incidentes</p>
+            <p class="text-white-50 m-0 mt-1 fs-5">Plataforma oficial para alertas vecinales en la Región de Tarapacá</p>
         </div>
     </div>
 
-    <div class="container my-4" style="max-width: 920px;">
+    <div class="container my-4" style="max-width: 950px;">
         
-        <!-- Formulario de Registro SIRVE-3 -->
+        <!-- Formulario de Registro con Mapa y Foto -->
         <div class="card card-sirve mb-5">
             <div class="card-header card-header-sirve d-flex align-items-center justify-content-between">
-                <span><i class="bi bi-plus-circle-fill text-warning me-2"></i> Registrar Zona Afectada (SIRVE-3)</span>
-                <small class="fw-normal opacity-75">Región de Tarapacá</small>
+                <span><i class="bi bi-plus-circle-fill text-warning me-2"></i> Registrar Zona Afectada / Incidente (SIRVE-3)</span>
+                <small class="fw-normal opacity-75">Iquique - Alto Hospicio</small>
             </div>
             <div class="card-body p-4">
                 <form id="formZonaAfectada">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold text-muted small"><i class="bi bi-geo-alt-fill text-danger me-1"></i> SECTOR / DIRECCIÓN EXACTA:</label>
-                        <input type="text" id="sectorInput" class="form-control form-control-lg fs-6 bg-light" required placeholder="Ej: Av. Arturo Prat con Baquedano, Iquique">
-                    </div>
                     
+                    <!-- 1. Mapa Interactivo de Georreferenciación -->
                     <div class="mb-3">
-                        <label class="form-label fw-bold text-muted small"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> TIPO DE INCIDENTE / AFECTACIÓN:</label>
+                        <label class="form-label fw-bold text-muted small">
+                            <i class="bi bi-geo-alt-fill text-danger me-1"></i> SELECCIONE LA UBICACIÓN EN EL MAPA:
+                        </label>
+                        <div id="mapaSeleccion" class="mb-2"></div>
+                        <small class="text-muted d-block mb-2">Haga clic en el mapa para marcar la ubicación exacta del incidente.</small>
+                        <input type="text" id="sectorInput" class="form-control bg-light" required placeholder="Coordenadas o dirección (Ej: Av. Arturo Prat con Baquedano)">
+                    </div>
+
+                    <!-- 2. Tipo de Incidente -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-muted small"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> TIPO DE INCIDENTE EN LA VÍA:</label>
                         <select id="tipoInput" class="form-select form-select-lg fs-6 bg-light" required>
-                            <option value="Acumulación de Agua">Acumulación de Agua / Anegamiento</option>
-                            <option value="Escombros / Basura">Acumulación de Escombros / Microbasural</option>
-                            <option value="Falla Alumbrado">Falla en Alumbrado Público</option>
-                            <option value="Daño Vía">Daño en Pavimento / Evento en Vía</option>
+                            <option value="Acumulación de Agua / Anegamiento">Acumulación de Agua / Anegamiento por Lluvia</option>
+                            <option value="Bache / Pavimento Dañado">Bache / Pavimento Dañado en Carretera</option>
+                            <option value="Microbasural / Escombros">Microbasural / Escombros en Vía Pública</option>
+                            <option value="Falla de Alumbrado Público">Falla de Alumbrado / Oscuridad en Sector</option>
+                            <option value="Derrumbe / Desprendimiento">Derrumbe / Desprendimiento de Rocas</option>
                         </select>
                     </div>
 
-                    <div class="mb-4">
+                    <!-- 3. Descripción del Daño -->
+                    <div class="mb-3">
                         <label class="form-label fw-bold text-muted small"><i class="bi bi-card-text me-1"></i> DESCRIPCIÓN DETALLADA DEL DAÑO:</label>
-                        <textarea id="descInput" class="form-control bg-light" rows="3" required placeholder="Describa la acumulación de agua, peligro o daños materiales materiales observados..."></textarea>
+                        <textarea id="descInput" class="form-control bg-light" rows="3" required placeholder="Describa los detalles o peligros presentes para la comunidad..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-sirve-primary w-100 shadow-sm py-3 fs-6">
+                    <!-- 4. Adjuntar Evidencia Fotográfica -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-muted small"><i class="bi bi-camera-fill text-primary me-1"></i> EVIDENCIA FOTOGRÁFICA (OPCIONAL):</label>
+                        <input type="file" id="fotoInput" class="form-control bg-light" accept="image/*">
+                    </div>
+
+                    <button type="submit" id="btnEnviarReporte" class="btn btn-sirve-primary w-100 shadow-sm py-3 fs-6">
                         <i class="bi bi-send-fill me-2"></i> Enviar Reporte Georreferenciado
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- Historial Comunal de Zonas Reportadas -->
+        <!-- Filtros y Lista de Zonas Reportadas por la Comunidad -->
         <div class="card card-sirve mb-5">
-            <div class="card-header bg-dark text-white fw-bold p-3 fs-5 d-flex align-items-center justify-content-between">
-                <span><i class="bi bi-list-task me-2 text-warning"></i> Zonas Reportadas por la Comunidad</span>
-                <button id="btnRecargar" class="btn btn-outline-light btn-sm"><i class="bi bi-arrow-clockwise"></i> Actualizar</button>
+            <div class="card-header bg-dark text-white p-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <span class="fw-bold fs-5"><i class="bi bi-list-task me-2 text-warning"></i> Zonas Reportadas por la Comunidad</span>
+                
+                <!-- Filtro por Estado -->
+                <div class="d-flex align-items-center gap-2">
+                    <span class="small text-white-50">Filtrar:</span>
+                    <select id="filtroEstado" class="form-select form-select-sm bg-secondary text-white border-0" style="width: auto;">
+                        <option value="Todos">Todos los reportes</option>
+                        <option value="Pendiente">Pendientes</option>
+                        <option value="Resuelto">Resueltos</option>
+                    </select>
+                    <button id="btnRecargar" class="btn btn-outline-light btn-sm"><i class="bi bi-arrow-clockwise"></i></button>
+                </div>
             </div>
+
             <div class="card-body p-3 bg-light">
                 <div id="listaReportes" class="d-flex flex-column gap-3">
                     <div class="p-4 text-center text-muted bg-white rounded-3 shadow-sm">
                         <div class="spinner-border text-success me-2" role="status"></div>
-                        Cargando información comunal desde Supabase...
+                        Cargando reportes en tiempo real...
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer armónico -->
+    <!-- Footer -->
     <footer class="border-top py-4 bg-white text-center small text-muted">
         <div class="container">
             © 2026 Municipalidad de Iquique • Gestión de Emergencias | <strong>S.I.R.V.E. Tarapacá</strong>
         </div>
     </footer>
 
-    <!-- Scripts de Supabase -->
+    <!-- JS de Leaflet (Mapas) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- SDK de Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
+
     <script>
         let usuarioActual = null;
+        let mapa, marcador;
+        let listaGlobalReportes = [];
 
-        // Comprobar sesión al cargar la página
+        // Inicializar Aplicación y Mapa al cargar la vista
         window.addEventListener("DOMContentLoaded", async () => {
             const { data: { session } } = await db.auth.getSession();
             if (!session) {
@@ -193,25 +236,69 @@
                 return;
             }
             usuarioActual = session.user;
-            document.getElementById("userBadge").innerHTML = `<i class="bi bi-person-circle text-success me-1"></i> ${usuarioActual.email}`;
+
+            // Extraer Nombre de Usuario / Pseudónimo para Privacidad en la UI
+            const nombreUsuario = usuarioActual.user_metadata?.nombre || usuarioActual.email.split('@')[0];
+            document.getElementById("userBadge").innerHTML = `<i class="bi bi-person-circle text-success me-1"></i> Vecino: <strong>${nombreUsuario}</strong>`;
+
+            inicializarMapa();
             cargarReportes();
         });
 
-        // Evento de cierre de sesión
+        // Configuración de Leaflet Map centrado en Iquique
+        function inicializarMapa() {
+            const coordsIquique = [-20.2307, -70.1357];
+            mapa = L.map('mapaSeleccion').setView(coordsIquique, 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(mapa);
+
+            // Evento al hacer clic en el mapa para situar marcador
+            mapa.on('click', function(e) {
+                const lat = e.latlng.lat.toFixed(5);
+                const lng = e.latlng.lng.toFixed(5);
+
+                if (marcador) {
+                    marcador.setLatLng(e.latlng);
+                } else {
+                    marcador = L.marker(e.latlng).addTo(mapa);
+                }
+
+                document.getElementById("sectorInput").value = `Iquique [Lat: ${lat}, Long: ${lng}]`;
+            });
+        }
+
+        // Cierre de Sesión
         document.getElementById("btnLogout").addEventListener("click", async () => {
             await db.auth.signOut();
             window.location.href = "login.html";
         });
 
-        // Botón recargar manual
+        // Eventos de Filtro y Recarga
         document.getElementById("btnRecargar").addEventListener("click", cargarReportes);
+        document.getElementById("filtroEstado").addEventListener("change", renderizarReportes);
 
-        // Insertar reporte en Supabase
+        // Subir e Insertar nuevo reporte
         document.getElementById("formZonaAfectada").addEventListener("submit", async (e) => {
             e.preventDefault();
+
+            const btn = document.getElementById("btnEnviarReporte");
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Registrando...`;
+
             const ubicacion = document.getElementById("sectorInput").value;
             const tipo = document.getElementById("tipoInput").value;
             const descripcion = document.getElementById("descInput").value;
+            const fotoFile = document.getElementById("fotoInput").files[0];
+
+            let imagenBase64 = null;
+            if (fotoFile) {
+                imagenBase64 = await convertirBase64(fotoFile);
+            }
+
+            // Pseudónimo para no mostrar el correo real en la tarjeta
+            const nombreAutor = usuarioActual.user_metadata?.nombre || usuarioActual.email.split('@')[0];
 
             const { data, error } = await db.from("accidentes").insert([
                 {
@@ -219,39 +306,86 @@
                     tipo: tipo,
                     descripcion: descripcion,
                     user_id: usuarioActual.id,
-                    estado: "Pendiente"
+                    estado: "Pendiente",
+                    imagen: imagenBase64
                 }
             ]);
 
+            btn.disabled = false;
+            btn.innerHTML = `<i class="bi bi-send-fill me-2"></i> Enviar Reporte Georreferenciado`;
+
             if (error) {
-                alert("Error al enviar el reporte: " + error.message);
+                alert("Error al guardar: " + error.message);
             } else {
-                alert("¡Reporte comunitario ingresado correctamente!");
+                alert("¡Reporte georreferenciado registrado exitosamente!");
                 document.getElementById("formZonaAfectada").reset();
+                if (marcador) mapa.removeLayer(marcador);
                 cargarReportes();
             }
         });
 
-        // Consultar datos desde Supabase
+        // Convertir imagen a Base64 para vista directa
+        function convertirBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Cargar Reportes desde Supabase y limpiar resueltos antiguos (+24h)
         async function cargarReportes() {
-            const lista = document.getElementById("listaReportes");
             const { data, error } = await db.from("accidentes").select("*").order("created_at", { ascending: false });
 
             if (error || !data) {
-                lista.innerHTML = `<div class="p-4 text-danger text-center bg-white rounded-3 shadow-sm"><i class="bi bi-exclamation-triangle me-1"></i> Error al conectar con la base de datos.</div>`;
+                document.getElementById("listaReportes").innerHTML = `<div class="p-4 text-danger text-center bg-white rounded-3"><i class="bi bi-exclamation-octagon me-1"></i> Error al conectar con Supabase.</div>`;
                 return;
             }
 
-            if (data.length === 0) {
-                lista.innerHTML = `<div class="p-4 text-muted text-center bg-white rounded-3 shadow-sm"><i class="bi bi-info-circle me-1"></i> No se han registrado incidentes todavía.</div>`;
+            // Limpieza de Demo: Eliminar reportes resueltos tras 24 horas transcurridas
+            const ahora = new Date();
+            data.forEach(async (item) => {
+                if (item.estado === "Resuelto") {
+                    const fechaCreacion = new Date(item.created_at);
+                    const horasDiferencia = (ahora - fechaCreacion) / (1000 * 60 * 60);
+                    if (horasDiferencia >= 24) {
+                        await db.from("accidentes").delete().eq("id", item.id);
+                    }
+                }
+            });
+
+            listaGlobalReportes = data;
+            renderizarReportes();
+        }
+
+        // Renderizar elementos en pantalla según el filtro activo
+        function renderizarReportes() {
+            const lista = document.getElementById("listaReportes");
+            const filtro = document.getElementById("filtroEstado").value;
+
+            let reportesFiltrados = listaGlobalReportes;
+            if (filtro !== "Todos") {
+                reportesFiltrados = listaGlobalReportes.filter(item => (item.estado || "Pendiente") === filtro);
+            }
+
+            if (reportesFiltrados.length === 0) {
+                lista.innerHTML = `<div class="p-4 text-muted text-center bg-white rounded-3"><i class="bi bi-info-circle me-1"></i> No hay incidentes que mostrar en esta categoría.</div>`;
                 return;
             }
 
             lista.innerHTML = "";
-            data.forEach(item => {
+            reportesFiltrados.forEach(item => {
                 let badgeStyle = "badge-pendiente";
-                if(item.estado === "En Proceso") badgeStyle = "badge-proceso";
-                if(item.estado === "Resuelto") badgeStyle = "badge-resuelto";
+                if (item.estado === "En Proceso") badgeStyle = "badge-proceso";
+                if (item.estado === "Resuelto") badgeStyle = "badge-resuelto";
+
+                // Visualización de Evidencia Fotográfica si existe
+                const bloqueImagen = item.imagen ? `
+                    <div class="mt-2 mb-2">
+                        <img src="${item.imagen}" class="img-fluid img-evidencia border shadow-sm" alt="Evidencia en terreno">
+                    </div>
+                ` : '';
 
                 lista.innerHTML += `
                     <div class="card card-sirve p-3 report-card">
@@ -261,16 +395,53 @@
                             </span>
                             <span class="badge ${badgeStyle} px-3 py-2 rounded-pill">${item.estado || 'Pendiente'}</span>
                         </div>
+
                         <p class="mb-2 text-secondary">
                             <strong class="text-dark">${item.tipo}:</strong> ${item.descripcion}
                         </p>
-                        <div class="small text-muted d-flex align-items-center gap-3">
-                            <span><i class="bi bi-calendar3 me-1"></i> ${new Date(item.created_at).toLocaleDateString()}</span>
-                            <span><i class="bi bi-clock me-1"></i> ${new Date(item.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+
+                        ${bloqueImagen}
+
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-2">
+                            <div class="small text-muted">
+                                <i class="bi bi-calendar3 me-1"></i> ${new Date(item.created_at).toLocaleDateString()}
+                            </div>
+                            <div class="d-flex gap-2">
+                                ${item.estado !== 'Resuelto' ? `
+                                    <button onclick="marcarResuelto(${item.id})" class="btn btn-outline-success btn-sm font-monospace">
+                                        <i class="bi bi-check-circle me-1"></i> Marcar Resuelto
+                                    </button>
+                                ` : ''}
+                                <button onclick="eliminarReporte(${item.id})" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash me-1"></i> Eliminar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
             });
+        }
+
+        // Marcar incidente como Resuelto (UPDATE)
+        async function marcarResuelto(id) {
+            const { error } = await db.from("accidentes").update({ estado: "Resuelto" }).eq("id", id);
+            if (error) {
+                alert("Error al actualizar: " + error.message);
+            } else {
+                cargarReportes();
+            }
+        }
+
+        // Borrar incidente (DELETE)
+        async function eliminarReporte(id) {
+            if (confirm("¿Desea eliminar este reporte del mapa comunitario?")) {
+                const { error } = await db.from("accidentes").delete().eq("id", id);
+                if (error) {
+                    alert("Error al eliminar: " + error.message);
+                } else {
+                    cargarReportes();
+                }
+            }
         }
     </script>
 </body>
