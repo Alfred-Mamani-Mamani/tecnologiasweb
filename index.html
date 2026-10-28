@@ -125,4 +125,92 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
-                    <span class="badge bg-
+                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold mb-3 border">
+                        <i class="bi bi-geo-alt-fill text-danger me-1"></i> REGIÓN DE TARAPACÁ
+                    </span>
+                    <h1 class="hero-title mb-4">Prepararnos en comunidad <span>nos protege.</span></h1>
+                    <p class="text-muted fs-5 mb-4">S.I.R.V.E. conecta a los vecinos con la municipalidad y organismos locales para responder en tiempo real ante emergencias, precipitación e incidentes comunitarios.</p>
+                    <div class="d-flex gap-3 align-items-center flex-wrap">
+                        <a href="registro.html" class="btn btn-sirve-primary text-decoration-none">Crear una cuenta <i class="bi bi-arrow-right ms-2"></i></a>
+                        <a href="login.html" class="btn btn-outline-dark rounded px-4 py-3 fw-bold"><i class="bi bi-box-arrow-in-right me-1"></i> Ya tengo cuenta</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-preview text-center">
+                        <div class="d-flex justify-content-between text-white-50 small mb-4">
+                            <span><i class="bi bi-shield-check text-warning me-1"></i> Red Regional S.I.R.V.E.</span>
+                            <span>Tarapacá, Chile</span>
+                        </div>
+                        <div class="py-4">
+                            <div class="bg-white bg-opacity-10 rounded-circle d-inline-flex p-4 mb-3 border border-light border-opacity-25">
+                                <i class="bi bi-broadcast fs-1 text-warning"></i>
+                            </div>
+                            <h3 class="fw-bold mt-2">Información local.<br><span class="text-warning">Acción coordinada.</span></h3>
+                        </div>
+                        <div class="d-flex justify-content-between border-top border-light border-opacity-25 pt-3 mt-4 small text-white-50">
+                            <span><i class="bi bi-people-fill me-1"></i> COMUNIDAD ACTIVA</span>
+                            <span><i class="bi bi-geo-fill me-1"></i> GEOLOCALIZACIÓN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Funcionalidades -->
+    <section id="plataforma" class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <span class="text-uppercase fw-bold text-muted tracking-wider">UN PUNTO DE ENCUENTRO CIUDADANO</span>
+                <h2 class="fw-bold fs-1 mt-2">Una plataforma interactiva para estar conectados</h2>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card h-100">
+                        <i class="bi bi-megaphone-fill feature-icon mb-3"></i>
+                        <h4 class="fw-bold">Reportes Vecinales</h4>
+                        <p class="text-muted">Notifica de manera inmediata anegamientos, fugas de agua, fallas de alumbrado o incidentes en tu zona.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100">
+                        <i class="bi bi-map-fill feature-icon mb-3"></i>
+                        <h4 class="fw-bold">Georreferenciación</h4>
+                        <p class="text-muted">Visualiza las zonas afectadas mediante ubicación geográfica precisa para una atención oportuna.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100">
+                        <i class="bi bi-clock-history feature-icon mb-3"></i>
+                        <h4 class="fw-bold">Seguimiento en Vivo</h4>
+                        <p class="text-muted">Revisa el estado de actualización (Pendiente, En Proceso, Resuelto) de cada alerta ingresada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-top py-4 bg-white">
+        <div class="container d-flex justify-content-between align-items-center small text-muted">
+            <span><strong>S.I.R.V.E.</strong> Tarapacá</span>
+            <span>Proyecto de Tecnología Web • Entrega Integrada</span>
+            <span>© 2026</span>
+        </div>
+    </footer>
+
+    <!-- Scripts de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", async () => {
+            const { data: { session } } = await db.auth.getSession();
+            if (session) {
+                // Si la sesión está activa, redirige directo a reportes
+                window.location.href = "reportes.html";
+            }
+        });
+    </script>
+</body>
+</html>
