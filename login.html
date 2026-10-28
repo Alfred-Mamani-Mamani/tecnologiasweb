@@ -5,85 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.I.R.V.E. Tarapacá | Iniciar Sesión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        body { background-color: #f7f9f8; font-family: system-ui, -apple-system, sans-serif; color: #2d3748; }
-        .hero-left { background-color: #e2ede3; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 4rem; }
-        .hero-title { font-size: 3rem; font-weight: 700; color: #1e3a34; line-height: 1.1; }
-        .hero-title span { color: #c85a32; font-style: italic; }
-        .form-container { max-width: 420px; width: 100%; margin: auto; padding: 2.5rem; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .btn-sirve { background-color: #1e3a34; color: white; border: none; font-weight: 600; padding: 0.75rem; }
-        .btn-sirve:hover { background-color: #142824; color: white; }
+        :root {
+            --sirve-green: #1b3832;
+            --sirve-accent: #d95d39;
+        }
+        body { background-color: #f7f9f8; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .hero-left { 
+            background: linear-gradient(135deg, #1b3832 0%, #0d1f1c 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            padding: 4rem; 
+            color: white;
+        }
+        .hero-title { font-size: 3rem; font-weight: 800; line-height: 1.1; }
+        .hero-title span { color: var(--sirve-accent); font-style: italic; }
+        .form-container { 
+            max-width: 440px; 
+            width: 100%; 
+            margin: auto; 
+            padding: 2.8rem; 
+            background: white; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06); 
+        }
+        .btn-sirve { 
+            background-color: var(--sirve-green); 
+            color: white; 
+            font-weight: 600; 
+            padding: 0.8rem; 
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .btn-sirve:hover { background-color: #0f2420; color: white; }
     </style>
 </head>
 <body>
 
     <div class="container-fluid p-0">
         <div class="row g-0 min-vh-100">
-            <!-- Lateral Izquierdo (Estilo Visual S.I.R.V.E.) -->
+            <!-- Lateral Izquierdo -->
             <div class="col-lg-6 d-none d-lg-flex hero-left">
                 <div>
                     <div class="d-flex align-items-center mb-5">
-                        <div class="bg-dark text-white fw-bold rounded-circle d-flex align-items-center justify-content-center me-2" style="width:36px; height:36px;">S</div>
+                        <div class="bg-white text-dark fw-bold rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm" style="width:40px; height:40px;">S</div>
                         <div>
-                            <strong class="d-block text-dark leading-none">S.I.R.V.E.</strong>
-                            <small class="text-muted">Tarapacá</small>
+                            <strong class="d-block text-white fs-5">S.I.R.V.E.</strong>
+                            <small class="text-white-50">Tarapacá</small>
                         </div>
                     </div>
-                    <small class="text-uppercase fw-bold text-muted tracking-wider">Portal Ciudadano</small>
+                    <small class="text-uppercase fw-bold text-white-50 tracking-wider">PORTAL CIUDADANO</small>
                     <h1 class="hero-title mt-2">Qué bueno<br>tenerte <span>de vuelta.</span></h1>
-                    <p class="text-muted mt-3 fs-5">Ingresa a tu cuenta para continuar en S.I.R.V.E. Tarapacá.</p>
-                    <a href="index.html" class="text-decoration-none text-dark fw-bold mt-3 d-inline-block">← Volver al inicio</a>
+                    <p class="text-white-50 mt-3 fs-5">Ingresa a tu cuenta para registrar o dar seguimiento a reportes en tu comuna.</p>
+                    <a href="index.html" class="text-decoration-none text-white fw-bold mt-3 d-inline-block"><i class="bi bi-arrow-left me-1"></i> Volver al inicio</a>
                 </div>
-                <small class="text-muted">S.I.R.V.E. Tarapacá • Proyecto de Tecnología Web</small>
+                <small class="text-white-50">S.I.R.V.E. Tarapacá • Sistema Comunal de Emergencias</small>
             </div>
 
-            <!-- Formularios de Inicio de Sesión -->
+            <!-- Formulario de Inicio de Sesión -->
             <div class="col-lg-6 d-flex align-items-center justify-content-center">
                 <div class="form-container">
                     <div class="d-flex justify-content-between text-muted small mb-4">
-                        <span>CUENTA CIUDADANA</span>
+                        <span class="fw-bold"><i class="bi bi-shield-lock me-1"></i> ACCESO SEGURO</span>
                         <span>01 / 02</span>
                     </div>
                     <h2 class="fw-bold mb-1">Iniciar sesión</h2>
-                    <p class="text-muted small mb-4">Ingresa tus datos de acceso.</p>
+                    <p class="text-muted small mb-4">Ingresa tus credenciales registradas.</p>
 
                     <form id="loginForm">
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-muted">Correo electrónico</label>
-                            <input type="email" id="loginEmail" class="form-control form-control-lg fs-6" required placeholder="nombre@correo.cl">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-muted"></i></span>
+                                <input type="email" id="loginEmail" class="form-control form-control-lg fs-6 border-start-0 bg-light" required placeholder="nombre@correo.cl">
+                            </div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label small fw-bold text-muted">Contraseña</label>
-                            <input type="password" id="loginPassword" class="form-control form-control-lg fs-6" required placeholder="Ingresa tu contraseña">
-                        </div>
-                        <button type="submit" class="btn btn-sirve w-100 rounded">Ingresar →</button>
-                    </form>
-
-                    <div class="text-center mt-4 pt-3 border-top small">
-                        ¿Aún no tienes cuenta? <a href="registro.html" class="text-danger fw-bold text-decoration-none">Regístrate aquí</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts de Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script>
-        document.getElementById("loginForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const email = document.getElementById("loginEmail").value;
-            const password = document.getElementById("loginPassword").value;
-
-            const { data, error } = await db.auth.signInWithPassword({ email, password });
-
-            if (error) {
-                alert("Error al ingresar: " + error.message);
-            } else {
-                window.location.href = "reportes.html";
-            }
-        });
-    </script>
-</body>
-</html>
+                            <label

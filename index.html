@@ -4,36 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.I.R.V.E. Tarapacá | Inicio</title>
+    <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        body { background-color: #f7f9f8; font-family: system-ui, -apple-system, sans-serif; color: #2d3748; }
-        .hero-section { background-color: #e2ede3; min-height: 80vh; padding: 4rem 2rem; }
-        .hero-title { font-size: 3.5rem; font-weight: 700; color: #1e3a34; line-height: 1.1; }
-        .hero-title span { color: #c85a32; font-style: italic; }
-        .btn-sirve-primary { background-color: #1e3a34; color: white; font-weight: 600; padding: 0.75rem 1.5rem; border: none; }
-        .btn-sirve-primary:hover { background-color: #142824; color: white; }
-        .btn-sirve-accent { background-color: #c85a32; color: white; font-weight: 600; border: none; }
-        .btn-sirve-accent:hover { background-color: #a64624; color: white; }
-        .card-preview { background-color: #1e3a34; color: white; border-radius: 12px; padding: 2.5rem; }
+        :root {
+            --sirve-green-dark: #1b3832;
+            --sirve-green-light: #e8f0ec;
+            --sirve-accent: #d95d39;
+            --sirve-accent-hover: #b84726;
+        }
+
+        body { 
+            background-color: #f7f9f8; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            color: #2d3748; 
+        }
+
+        /* Hero Section */
+        .hero-section { 
+            background: linear-gradient(135deg, #e4ede7 0%, #f4f8f5 100%); 
+            min-height: 85vh; 
+            padding: 5rem 1.5rem; 
+        }
+        
+        .hero-title { 
+            font-size: 3.5rem; 
+            font-weight: 800; 
+            color: var(--sirve-green-dark); 
+            line-height: 1.15; 
+        }
+        
+        .hero-title span { 
+            color: var(--sirve-accent); 
+            font-style: italic; 
+        }
+
+        /* Botones personalizados */
+        .btn-sirve-primary { 
+            background-color: var(--sirve-green-dark); 
+            color: white; 
+            font-weight: 600; 
+            padding: 0.85rem 1.8rem; 
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(27, 56, 50, 0.15);
+        }
+        .btn-sirve-primary:hover { 
+            background-color: #122622; 
+            color: white; 
+            transform: translateY(-2px);
+        }
+
+        .btn-sirve-accent { 
+            background-color: var(--sirve-accent); 
+            color: white; 
+            font-weight: 600; 
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .btn-sirve-accent:hover { 
+            background-color: var(--sirve-accent-hover); 
+            color: white; 
+        }
+
+        /* Tarjeta Dashboard Preview */
+        .card-preview { 
+            background: linear-gradient(145deg, #1b3832 0%, #0f2420 100%); 
+            color: white; 
+            border-radius: 20px; 
+            padding: 3rem 2.5rem; 
+            box-shadow: 0 15px 35px rgba(27, 56, 50, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tarjetas de características */
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            border: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+        }
+        .feature-icon {
+            font-size: 2.2rem;
+            color: var(--sirve-accent);
+        }
     </style>
 </head>
 <body>
 
     <!-- Header / Navbar Principal -->
-    <nav class="navbar navbar-expand-lg bg-transparent py-3">
+    <nav class="navbar navbar-expand-lg py-3 bg-white shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <div class="bg-dark text-white fw-bold rounded-circle d-flex align-items-center justify-content-center me-2" style="width:36px; height:36px;">S</div>
+                <div class="bg-dark text-white fw-bold rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm" style="width:40px; height:40px;">S</div>
                 <div>
-                    <strong class="d-block text-dark leading-none">S.I.R.V.E.</strong>
+                    <strong class="d-block text-dark leading-none fs-5">S.I.R.V.E.</strong>
                     <small class="text-muted fs-7">Tarapacá</small>
                 </div>
             </a>
             <div class="ms-auto d-flex align-items-center gap-3">
-                <a href="index.html" class="nav-link text-dark fw-semibold active">Inicio</a>
-                <a href="#plataforma" class="nav-link text-muted">La plataforma</a>
+                <a href="index.html" class="nav-link text-dark fw-bold active">Inicio</a>
+                <a href="#plataforma" class="nav-link text-muted">Plataforma</a>
                 <a href="login.html" class="nav-link text-dark fw-bold">Iniciar sesión</a>
-                <a href="registro.html" class="btn btn-sirve-accent rounded px-3 py-2">Crear cuenta</a>
+                <a href="registro.html" class="btn btn-sirve-accent text-decoration-none"><i class="bi bi-person-plus-fill me-1"></i> Crear cuenta</a>
             </div>
         </div>
     </nav>
@@ -43,84 +125,4 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
-                    <small class="text-uppercase fw-bold text-muted tracking-wider">PORTAL CIUDADANO • REGIÓN DE TARAPACÁ</small>
-                    <h1 class="hero-title mt-2 mb-4">Prepararnos en comunidad <span>nos protege.</span></h1>
-                    <p class="text-muted fs-5 mb-4">S.I.R.V.E. reúne a vecinos y organismos locales para informar y responder mejor ante emergencias y situaciones críticas en tu sector.</p>
-                    <div class="d-flex gap-3 align-items-center">
-                        <a href="registro.html" class="btn btn-sirve-primary rounded">Crear una cuenta →</a>
-                        <a href="login.html" class="text-decoration-none text-dark fw-bold">Ya tengo una cuenta ↗</a>
-                    </div>
-                    <small class="d-block text-muted mt-4">Sistema Integrado de Reportes Vecinales y Emergencias</small>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card-preview shadow-lg">
-                        <div class="d-flex justify-content-between text-muted small mb-4">
-                            <span>S.I.R.V.E. / 01</span>
-                            <span>Tarapacá, Chile</span>
-                        </div>
-                        <div class="text-center py-4">
-                            <div class="border border-secondary rounded-circle d-inline-flex p-4 mb-3">
-                                <h2 class="m-0 fw-bold">SV</h2>
-                            </div>
-                            <h3 class="fw-bold mt-2">Información local.<br>Acción coordinada.</h3>
-                        </div>
-                        <div class="d-flex justify-content-between border-top border-secondary pt-3 mt-4 small text-muted">
-                            <span>COMUNIDAD</span>
-                            <span>PREVENCIÓN</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Funcionalidades principales -->
-    <section id="plataforma" class="py-5 bg-white">
-        <div class="container py-4">
-            <small class="text-uppercase fw-bold text-muted">UN PUNTO DE ENCUENTRO</small>
-            <h2 class="fw-bold mb-5 fs-1">Una plataforma para estar más cerca.</h2>
-            
-            <div class="row g-4">
-                <div class="col-md-4 border-top pt-3">
-                    <span class="text-danger fw-bold fs-5">01</span>
-                    <h4 class="fw-bold mt-2">Información oficial</h4>
-                    <p class="text-muted">Consulta avisos y orientaciones de organismos públicos de la Región de Tarapacá.</p>
-                </div>
-                <div class="col-md-4 border-top pt-3">
-                    <span class="text-danger fw-bold fs-5">02</span>
-                    <h4 class="fw-bold mt-2">Reportes vecinales</h4>
-                    <p class="text-muted">Comparte información sobre anegamientos, incidentes y situaciones que afectan a tu sector.</p>
-                </div>
-                <div class="col-md-4 border-top pt-3">
-                    <span class="text-danger fw-bold fs-5">03</span>
-                    <h4 class="fw-bold mt-2">Contexto territorial</h4>
-                    <p class="text-muted">Conoce mejor las alertas georreferenciadas y necesidades de la comunidad en tiempo real.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Institucional -->
-    <footer class="border-top py-4 bg-light">
-        <div class="container d-flex justify-content-between align-items-center small text-muted">
-            <span><strong>S.I.R.V.E.</strong> Tarapacá</span>
-            <span>Proyecto de Tecnología Web • Entrega Frontend</span>
-            <span>© 2026</span>
-        </div>
-    </footer>
-
-    <!-- Script para verificar sesión si ingresan directo a index -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script>
-        // Si el usuario ya tiene sesión activa, lo podemos redirigir al panel de reportes
-        window.addEventListener("DOMContentLoaded", async () => {
-            const { data: { session } } = await db.auth.getSession();
-            if (session) {
-                // Redirección opcional automática si ya está logueado
-                // window.location.href = "reportes.html";
-            }
-        });
-    </script>
-</body>
-</html>
+                    <span class="badge bg-
